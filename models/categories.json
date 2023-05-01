@@ -1,50 +1,22 @@
 [
   {
-    "index": 1,
-    "name": "activities",
-    "user": "public",
-    "photo": "activities.jpg"
+      "title": "Drinks",
+      "value": "drinks",
+      "icon": "mdi-beer"
   },
   {
-    "index": 2,
-    "name": "animals",
-    "user": "public",
-    "photo": "animals.jpg"
+      "title": "Snacks",
+      "value": "snacks",
+      "icon": "mdi-french-fries"
   },
   {
-    "index":3,
-    "name": "colors and shapes",
-    "user": "public",
-    "photo": "colorsandshapes.jpg"
+      "title": "Vegetables",
+      "value": "vegetables",
+      "icon": "mdi-carrot"
   },
   {
-    "index":4,
-    "name": "emotions",
-    "user": "public",
-    "photo": "emotions.jpg"
-  },
-  {
-    "index":5,
-    "name": "food",
-    "user": "public",
-    "photo": "food.jpg"
-  },
-  {
-    "index":6,
-    "name": "places",
-    "user": "public",
-    "photo": "places.jpg"
-  },
-  {
-    "index":7,
-    "name": "symbols",
-    "user": "public",
-    "photo": "symbols.jpg"
-  },
-  {
-    "index":8,
-    "name": "transportation",
-    "user": "public",
-    "photo": "transportation.jpg"
+      "title": "Fruits",
+      "value": "fruits",
+      "icon": "mdi-food-apple"
   }
 ]
