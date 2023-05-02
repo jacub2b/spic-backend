@@ -19,7 +19,7 @@ router.post('/register', (req, res) => {
   } else res.sendStatus(409)
 });
 
-router.post('login', (req, res) => {
+router.post('/login', (req, res) => {
   const username = req.body.username;
   const password = req.body.password; 
   const user = users.find(user => user.username == username && user.password == password);
