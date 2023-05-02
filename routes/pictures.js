@@ -9,12 +9,38 @@ router.get('/', (req, res) => {
 });
 
 router.get('/categories/:category', async (req, res) => {
-  const db = await connectToDB();
-  var category = req.params.category;
-  var user = req.headers.authorization;
-  res.send(pictures);
+  try {
+    console.log('got pictures request');
+    const db = await connectToDB();
+    const category = req.params.category;
+    const userToken = req.headers.authorization;
 
-  console.log("yey " + category);
+    const categoryPictures = await db.collection('pictures')
+    .find({category: category, owner: { $in: ['public', userToken] }}).toArray();
+    res.send(categoryPictures);
+  } catch(error) {
+    console.error(error);
+    res.status(500).send('error fetching pictures');
+  }
 });
+
+router.post('/categories/:category', async (req, res) => {
+  try{
+    const db = await connectToDB();
+    const category = req.params.category;
+    const {title, src} = req.body;
+    const userToken = req.headers.authorization;
+    const owner = userToken ? userToken : 'public';
+
+    const result = await db.collection('pictures').insertOne({
+      title, category, src, owner
+    });
+
+    res.send(result);
+  } catch(error) {
+    console.error(error);
+    res.status(500).send('error creating picture');
+  }
+})
 
 module.exports = router;

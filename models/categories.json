@@ -2,21 +2,25 @@
   {
       "title": "Drinks",
       "value": "drinks",
-      "icon": "mdi-beer"
+      "icon": "mdi-beer",
+      "owner": "public"
   },
   {
       "title": "Snacks",
       "value": "snacks",
-      "icon": "mdi-french-fries"
+      "icon": "mdi-french-fries",
+      "owner": "public"
   },
   {
       "title": "Vegetables",
       "value": "vegetables",
-      "icon": "mdi-carrot"
+      "icon": "mdi-carrot",
+      "owner": "public"
   },
   {
       "title": "Fruits",
       "value": "fruits",
-      "icon": "mdi-food-apple"
+      "icon": "mdi-food-apple",
+      "owner": "jack"
   }
 ]

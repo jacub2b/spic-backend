@@ -1,35 +1,44 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+const connectToDB = require('../mongo');
 
-const users = require('../models/users.json');
+router.post('/register', async (req, res) => {
+  try {
+    const {username, password, email} = req.body;
+    const db = await connectToDB();
 
-router.post('/register', (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  const email = req.body.email;
+    const users = await db.collection('users').find().toArray();
 
-  if(!users.find(user => user.username == username)) {
-    const token = jwt.sign({username}, 'secret');
-    users.push({username, password, email, token});
-    console.log(users);
+    if(!users.find(user => user.username == username)) {
+      const token = jwt.sign({username}, 'secret');
+      const result = await db.collection('users').insertOne({username, password, email, token});
 
-    res.send({token});
-    
-  } else res.sendStatus(409)
+      console.log(result);
+      res.send({result});
+      
+    } else res.status(409).send('username already in use');
+  } catch(error) {
+    console.error(error);
+    res.status(500).send('error registering user');
+  }
 });
 
-router.post('/login', (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password; 
-  const user = users.find(user => user.username == username && user.password == password);
+router.post('/login', async (req, res) => {
+  try {
+    const {username, password} = req.body;
+    const db = await connectToDB();
+    const users = await db.collection('users').find().toArray();
+    const user = users.find(user => user.username == username && user.password == password);
 
-  console.log(user);
-
-  if(user) {
-    const token = user.token;
-    res.send({token})
-  } else res.sendStatus(401);
+    if(user) {
+      const token = user.token;
+      res.send({token})
+    } else res.status(401).send('incorrect username or password');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('error logging in user')
+  }
 });
 
 module.exports = router;
