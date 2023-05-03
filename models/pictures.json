@@ -64,5 +64,41 @@
     "category": "drinks",
     "title": "Watermelon",
     "owner": "public"
+  },
+  {
+    "src": "/pictures/categories/vegetables/beet.jpg",
+    "category": "vegetables",
+    "title": "Beet",
+    "owner": "public"
+  },
+  {
+    "src": "/pictures/categories/vegetables/kohlrabi.jpg",
+    "category": "vegetables",
+    "title": "Kohlrabi",
+    "owner": "public"
+  },
+  {
+    "src": "/pictures/categories/vegetables/cucumber.jpg",
+    "category": "vegetables",
+    "title": "Cucumber",
+    "owner": "public"
+  },
+  {
+    "src": "/pictures/categories/vegetables/lettuce.jpg",
+    "category": "vegetables",
+    "title": "Lettuce",
+    "owner": "public"
+  },
+  {
+    "src": "/pictures/categories/vegetables/potato.jpg",
+    "category": "vegetables",
+    "title": "Potato",
+    "owner": "public"
+  },
+  {
+    "src": "/pictures/categories/vegetables/tomato.jpg",
+    "category": "vegetables",
+    "title": "Tomato",
+    "owner": "public"
   }
 ]
