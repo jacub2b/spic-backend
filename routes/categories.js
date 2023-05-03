@@ -1,20 +1,18 @@
 const express = require ('express');
 const router = express.Router();
 const connectToDB = require('../mongo');
-
-const categoriesJson = require('../models/categories.json');
+const _ = require('lodash')
+const jwt = require("jsonwebtoken");
 
 router.get('/', async (req, res) => {
   try {
     const db = await connectToDB();
     const userToken = req.headers.authorization;
-    console.log("token:" + userToken);
     const categories = db.collection('categories');
     const userCategories = await categories.find({ owner: { $in: ['public', userToken] } }).toArray();
     
     res.send(userCategories);
   } catch(error) {
-    console.error(error);
     res.status(500).send('error fetching categories');
   }
 });
@@ -22,17 +20,29 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const db = await connectToDB();
-    const {title, value, icon} = req.body;
-    const userToken = req.headers.authorization;
-    const owner = userToken ? userToken : 'public';
+    const {category} = req.body;
+    const value = _.camelCase(category);
+    const authorization = req.headers.authorization;
 
-    const result = await db.collection('categories').insertOne({
-      title, value, icon, owner
+    if (!authorization) return res.sendStatus(401);
+
+    const token = authorization.split(' ')[1];
+    const isValidToken = jwt.verify(token, 'secret', err => {
+      if (err) {
+        res.sendStatus(401)
+        return false;
+      } else return true
     });
-    
-    res.send(result);
+    if (!isValidToken) return;
+
+    const isExists = await db.collection('categories').findOne({value: value});
+    if (isExists) return res.sendStatus(409);
+    else {
+      const newCategory = {title: category, value, icon: 'mdi-star', owner: token};
+      await db.collection('categories').insertOne(newCategory);
+      res.send({newCategory});
+    }
   } catch(error) {
-    console.error(error);
     res.status(500).send('error creating category');
   }
 });
