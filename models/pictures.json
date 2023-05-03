@@ -100,5 +100,53 @@
     "category": "vegetables",
     "title": "Tomato",
     "owner": "public"
+  },
+  {
+    "src": "/pictures/categories/fruits/watermelon.jpg",
+    "category": "fruits",
+    "title": "Watermelon",
+    "owner": "public"
+  },
+  {
+    "src": "/pictures/categories/fruits/apple.png",
+    "category": "fruits",
+    "title": "Apple",
+    "owner": "public"
+  },
+  {
+    "src": "/pictures/categories/fruits/grape.png",
+    "category": "fruits",
+    "title": "Grape",
+    "owner": "public"
+  },
+  {
+    "src": "/pictures/categories/fruits/lemon.jpg",
+    "category": "fruits",
+    "title": "Lemon",
+    "owner": "public"
+  },
+  {
+    "src": "/pictures/categories/fruits/melon.png",
+    "category": "fruits",
+    "title": "Melon",
+    "owner": "public"
+  },
+  {
+    "src": "/pictures/categories/fruits/orange.jpg",
+    "category": "fruits",
+    "title": "Orange",
+    "owner": "public"
+  },
+  {
+    "src": "/pictures/categories/fruits/pear.jpg",
+    "category": "fruits",
+    "title": "Pear",
+    "owner": "public"
+  },
+  {
+    "src": "/pictures/categories/fruits/pineapple.jpg",
+    "category": "fruits",
+    "title": "Pineapple",
+    "owner": "public"
   }
 ]
