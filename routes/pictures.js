@@ -24,6 +24,10 @@ router.get('/categories/:category', async (req, res) => {
   }
 });
 
+router.get('/categories/:category/:name', (req, res) => {
+    res.sendFile(req.originalUrl, {root: '.'} )
+});
+
 router.post('/categories/:category', async (req, res) => {
   try{
     const db = await connectToDB();
