@@ -1,16 +1,17 @@
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const app = express();
-const mongo = require('./mongo');
 
 const categoriesRouter = require('./routes/categories');
 const picturesRouter = require('./routes/pictures');
 const usersRouter = require('./routes/users');
 
 app.use(cors({origin: '*'}));
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(fileUpload({createParentPath: true}))
 
 app.use('/', usersRouter)
 app.use('/categories', categoriesRouter);

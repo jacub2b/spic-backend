@@ -22,7 +22,7 @@ const getTokenFromHeader = header => {
 const checkTokenFromHeader = header => {
     if (!header) return false
 
-    const token = getTokenFromHeader()
+    const token = getTokenFromHeader(header)
     return isValidToken(token)
 }
 

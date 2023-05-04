@@ -1,8 +1,7 @@
 const express = require ('express');
 const router = express.Router();
 const connectToDB = require('../mongo');
-
-const pictures = require('../models/pictures.json');
+const {getTokenFromHeader, checkTokenFromHeader} = require("../utils");
 
 router.get('/', (req, res) => {
   res.send("you've gotta specify a category bro");
@@ -10,10 +9,9 @@ router.get('/', (req, res) => {
 
 router.get('/categories/:category', async (req, res) => {
   try {
-    console.log('got pictures request');
     const db = await connectToDB();
     const category = req.params.category;
-    const userToken = req.headers.authorization;
+    const userToken = getTokenFromHeader(req.headers.authorization);
 
     const categoryPictures = await db.collection('pictures')
     .find({category: category, owner: { $in: ['public', userToken] }}).toArray();
@@ -24,27 +22,31 @@ router.get('/categories/:category', async (req, res) => {
   }
 });
 
+router.post('/categories/:category', async (req, res) => {
+    const isValidToken = checkTokenFromHeader(req.headers.authorization)
+    if (!isValidToken) return res.sendStatus(401)
+
+    const file = req.files.file
+    const pictureName = req.body.title
+    const category = req.params.category
+    const src = `/pictures/categories/${category}/${file.name}`
+    const token = getTokenFromHeader(req.headers.authorization)
+    await file.mv(`./${src}`)
+
+    try {
+        const db = await connectToDB();
+        await db.collection('pictures').insertOne({
+            title: pictureName, category, src, owner: token
+        });
+
+        res.sendStatus(200)
+    } catch(error) {
+        res.status(500).send('error creating picture');
+    }
+})
+
 router.get('/categories/:category/:name', (req, res) => {
     res.sendFile(req.originalUrl, {root: '.'} )
 });
-
-router.post('/categories/:category', async (req, res) => {
-  try{
-    const db = await connectToDB();
-    const category = req.params.category;
-    const {title, src} = req.body;
-    const userToken = req.headers.authorization;
-    const owner = userToken ? userToken : 'public';
-
-    const result = await db.collection('pictures').insertOne({
-      title, category, src, owner
-    });
-
-    res.send(result);
-  } catch(error) {
-    console.error(error);
-    res.status(500).send('error creating picture');
-  }
-})
 
 module.exports = router;

@@ -10,7 +10,6 @@ router.get('/', async (req, res) => {
     const userToken = getTokenFromHeader(req.headers.authorization);
     const categories = db.collection('categories');
     const userCategories = await categories.find({ owner: { $in: ['public', userToken] } }).toArray();
-    console.log(userCategories)
     res.send(userCategories);
   } catch(error) {
     res.status(500).send('error fetching categories');
