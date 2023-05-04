@@ -18,6 +18,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   if (!checkTokenFromHeader(req.headers.authorization)) return res.sendStatus(401);
+  const token = getTokenFromHeader(req.headers.authorization)
 
   try {
     const db = await connectToDB();
