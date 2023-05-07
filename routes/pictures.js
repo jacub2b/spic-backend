@@ -46,7 +46,7 @@ router.post('/categories/:category', async (req, res) => {
 })
 
 router.get('/categories/:category/:name', (req, res) => {
-    res.sendFile(req.originalUrl, {root: '.'} )
+    res.sendFile(decodeURI(req.originalUrl), {root: '.'} )
 });
 
 module.exports = router;
