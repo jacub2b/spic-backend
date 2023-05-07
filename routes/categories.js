@@ -37,4 +37,14 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.delete('/:category', async(req, res) => {
+  try {
+    const db = await connectToDB()
+    await db.collection('categories').findOneAndDelete({value: req.params.category})
+    res.sendStatus(200)
+  } catch {
+    res.sendStatus(500)
+  }
+})
+
 module.exports = router;
