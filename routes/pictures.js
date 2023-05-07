@@ -1,6 +1,7 @@
 const express = require ('express');
 const router = express.Router();
 const connectToDB = require('../mongo');
+const fs = require("fs");
 const {getTokenFromHeader, checkTokenFromHeader} = require("../utils");
 
 router.get('/', (req, res) => {
@@ -47,6 +48,22 @@ router.post('/categories/:category', async (req, res) => {
 
 router.get('/categories/:category/:name', (req, res) => {
     res.sendFile(decodeURI(req.originalUrl), {root: '.'} )
+});
+
+router.delete('/categories/:category/:name', async (req, res) => {
+    try {
+        const category = req.params.category
+        const name = req.params.name
+
+        fs.unlinkSync(`${__dirname}/../pictures/categories/${category}/${name}`)
+
+        const db = await connectToDB()
+        await db.collection('pictures').findOneAndDelete({category: category, src: decodeURI(req.originalUrl)})
+        res.sendStatus(200)
+    } catch (err) {
+        console.log(err)
+        res.sendStatus(500)
+    }
 });
 
 module.exports = router;
